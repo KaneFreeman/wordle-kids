@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { Box } from '@mui/material';
 import './GameTiles.css';
 import GameTile from './GameTile';
@@ -11,21 +12,14 @@ interface GameTilesProps {
   onLastTileFlip?: () => void;
 }
 
-function GameTiles({
-  target,
-  word,
-  wordLength,
-  locked = false,
-  shake = false,
-  onLastTileFlip,
-}: GameTilesProps) {
+function GameTiles({ target, word, wordLength, locked = false, shake = false, onLastTileFlip }: GameTilesProps) {
   return (
     <Box
       className={shake ? 'shake' : undefined}
       sx={{
         display: 'grid',
         gridTemplateColumns: `repeat(${wordLength}, 1fr)`,
-        gridGap: '5px',
+        gridGap: '5px'
       }}
     >
       {[...Array(wordLength)].map((_, index) => {

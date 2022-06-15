@@ -8,12 +8,7 @@ const FLOOR_HEIGHT = 800; // pixels the particles will fall from initial explosi
 const FLOOR_WIDTH = 1600; // horizontal spread of particles in pixels
 const PARTICLE_COUNT = 150;
 const DURATION = 3500;
-const COLORS = [
-  '#FFC700',
-  '#FF0000',
-  '#2E3191',
-  '#41BBC7'
-];
+const COLORS = ['#FFC700', '#FF0000', '#2E3191', '#41BBC7'];
 
 interface IConfetti {
   particleCount?: number;
@@ -27,9 +22,9 @@ interface IConfetti {
 
 const createParticles = (count: number, colors: string[]): IParticle[] => {
   const increment = 360 / count;
-  return range(count).map(index => ({
+  return range(count).map((index) => ({
     color: colors[index % colors.length],
-    degree: increment * index,
+    degree: increment * index
   }));
 };
 
@@ -49,7 +44,7 @@ function ConfettiExplosion({
     <div className={classes.container}>
       {particles.map((particle, i) => (
         <div id={`confetti-particle-${i}`} className={classes.particle} key={particle.degree}>
-          <div></div>
+          <div />
         </div>
       ))}
     </div>

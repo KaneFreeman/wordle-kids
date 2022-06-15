@@ -10,18 +10,8 @@ interface KeyboardButtonProps {
   sx?: SxProps<Theme> | undefined;
 }
 
-function KeyboardButton({
-  letter,
-  label,
-  guesses,
-  target,
-  onClick,
-  sx,
-}: KeyboardButtonProps) {
-  const onClickHandler = useCallback(
-    () => onClick(letter ?? ''),
-    [onClick, letter]
-  );
+function KeyboardButton({ letter, label, guesses, target, onClick, sx }: KeyboardButtonProps) {
+  const onClickHandler = useCallback(() => onClick(letter ?? ''), [onClick, letter]);
 
   const [color, background] = useMemo(() => {
     if (!letter) {
@@ -36,9 +26,7 @@ function KeyboardButton({
         }
       });
     });
-    foundAt = foundAt.filter(
-      (value, index, self) => self.indexOf(value) === index
-    );
+    foundAt = foundAt.filter((value, index, self) => self.indexOf(value) === index);
 
     if (foundAt.length === 0) {
       return ['#ffffff', '#4e4e4e'];
@@ -48,14 +36,7 @@ function KeyboardButton({
       return ['#686868', '#1f1f1f'];
     }
 
-    let inRightSpot = false;
-    for (const index of foundAt) {
-      if (target.charAt(index) === letter) {
-        inRightSpot = true;
-        break;
-      }
-    }
-
+    const inRightSpot = foundAt.find((index) => target.charAt(index) === letter) !== undefined;
     if (inRightSpot) {
       return ['#ffffff', '#408535'];
     }
@@ -82,7 +63,7 @@ function KeyboardButton({
         textTransform: 'uppercase',
         userSelect: 'none',
         flex: 1,
-        ...sx,
+        ...sx
       }}
       onClick={onClickHandler}
     >

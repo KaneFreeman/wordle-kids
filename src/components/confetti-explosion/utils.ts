@@ -23,7 +23,7 @@ export const rotationTransforms: Rotate3dTransform[] = [
   // single axis rotations (a bit dumber)
   [1, 0, 0],
   [0, 1, 0],
-  zAxisRotation,
+  zAxisRotation
 ];
 
 export const shouldBeCircle = (rotationIndex: number) => {

@@ -17,21 +17,17 @@ const Confetti = React.memo(({ enabled, width, height }: GameTileProps) => {
         top: '51px',
         overflow: 'hidden',
         width: '100%',
-        height: `calc(100% - 51px)`,
+        height: 'calc(100% - 51px)'
       }}
     >
       <Box
         sx={{
           position: 'relative',
           left: '50%',
-          top: '20%',
+          top: '20%'
         }}
       >
-        <ConfettiExplosion
-          key="confetti"
-          floorHeight={height}
-          floorWidth={width}
-        />
+        <ConfettiExplosion key="confetti" floorHeight={height} floorWidth={width} />
       </Box>
     </Box>
   ) : null;

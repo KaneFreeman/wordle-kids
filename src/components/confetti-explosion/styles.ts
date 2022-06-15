@@ -33,9 +33,9 @@ const rotationKeyframes = rotationTransforms.reduce((acc, xyz, i) => {
     ...acc,
     [`@keyframes rotation-${i}`]: {
       to: {
-        transform: `rotate3d(${xyz.join()}, 360deg)`,
-      },
-    },
+        transform: `rotate3d(${xyz.join()}, 360deg)`
+      }
+    }
   };
 }, {});
 
@@ -46,19 +46,19 @@ const confettiKeyframes = (degrees: number[], floorHeight: number, floorWidth: n
       ...acc,
       [`@keyframes x-axis-${i}`]: {
         to: {
-          transform: `translateX(${landingPoint}px)`,
-        },
-      },
+          transform: `translateX(${landingPoint}px)`
+        }
+      }
     };
   }, {});
 
   return {
     '@keyframes y-axis': {
       to: {
-        transform: `translateY(${floorHeight}px)`,
-      },
+        transform: `translateY(${floorHeight}px)`
+      }
     },
-    ...xLandingPoints,
+    ...xLandingPoints
   };
 };
 
@@ -95,10 +95,10 @@ const confettoStyle = (particle: IParticle, duration: number, force: number, siz
         '&:after': {
           backgroundColor: particle.color,
           animation: `$rotation-${rotationIndex} ${rotation}ms infinite linear`,
-          ...(isCircle ? { borderRadius: '50%' } : {}),
-        },
-      },
-    },
+          ...(isCircle ? { borderRadius: '50%' } : {})
+        }
+      }
+    }
   };
 };
 
@@ -109,7 +109,7 @@ const useStyles = ({
   floorWidth,
   force,
   particleSize
-}: IParticlesProps): () => IStyleClasses =>
+}: IParticlesProps): (() => IStyleClasses) =>
   makeStyles(
     () => {
       const confettiStyles = particles.reduce(
@@ -119,13 +119,17 @@ const useStyles = ({
 
       return {
         ...rotationKeyframes,
-        ...confettiKeyframes(particles.map(particle => particle.degree), floorHeight, floorWidth),
+        ...confettiKeyframes(
+          particles.map((particle) => particle.degree),
+          floorHeight,
+          floorWidth
+        ),
         container: {
           width: 0,
           height: 0,
           position: 'relative',
           overflow: 'visible',
-          zIndex: 1200,
+          zIndex: 1200
         },
         particle: {
           ...confettiStyles,
@@ -134,13 +138,13 @@ const useStyles = ({
             left: 0,
             top: 0,
             '&:after': {
-              content: `''`,
+              content: "''",
               display: 'block',
               width: '100%',
-              height: '100%',
-            },
-          },
-        },
+              height: '100%'
+            }
+          }
+        }
       };
     },
     { name: 'ConfettiExplosion' }

@@ -14,13 +14,26 @@
     "react-dom": "17.0.2",
     "react-scripts": "5.0.1",
     "typescript": "4.7.3",
-    "web-vitals": "2.1.4"
+    "web-vitals": "2.1.4",
+    "workbox-background-sync": "6.5.3",
+    "workbox-broadcast-update": "6.5.3",
+    "workbox-cacheable-response": "6.5.3",
+    "workbox-core": "6.5.3",
+    "workbox-expiration": "6.5.3",
+    "workbox-google-analytics": "6.5.3",
+    "workbox-navigation-preload": "6.5.3",
+    "workbox-precaching": "6.5.3",
+    "workbox-range-requests": "6.5.3",
+    "workbox-routing": "6.5.3",
+    "workbox-strategies": "6.5.3",
+    "workbox-streams": "6.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "cross-env NODE_ENV=development eslint . --cache --ext .ts"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +62,34 @@
     "@types/node": "16.11.40",
     "@types/react": "17.0.45",
     "@types/react-dom": "18.0.5",
+    "cross-env": "7.0.3",
+    "eslint": "8.17.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-compat": "4.0.2",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-react": "7.30.0",
+    "eslint-plugin-react-hooks": "4.6.0",
     "prettier": "2.6.2"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": [
+          ".prettierrc",
+          ".eslintrc"
+        ],
+        "options": {
+          "parser": "json"
+        }
+      }
+    ],
+    "trailingComma": "none",
+    "singleQuote": true,
+    "printWidth": 120
   }
 }

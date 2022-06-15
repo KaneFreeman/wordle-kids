@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import useResizeObserver from "@react-hook/resize-observer";
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/no-array-index-key */
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import useResizeObserver from '@react-hook/resize-observer';
 import {
   Alert,
   Box,
@@ -17,18 +19,18 @@ import {
   Snackbar,
   ThemeProvider,
   Typography,
-  useMediaQuery,
-} from "@mui/material";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { useWindowEvent } from "./utility/window.util";
-import { useCheckForUpdates } from "./utility/pwa.util";
-import PWAUpdateConfirmEvent from "./utility/events/pawUpdateConfirmEvent";
-import GameTiles from "./components/GameTiles";
-import Keyboard from "./components/Keyboard";
-import allWords from "./words.json";
-import dictionary from "./dictionary.json";
-import Confetti from "./components/Confetti";
-import "./App.css";
+  useMediaQuery
+} from '@mui/material';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { useWindowEvent } from './utility/window.util';
+import { useCheckForUpdates } from './utility/pwa.util';
+import PWAUpdateConfirmEvent from './utility/events/pawUpdateConfirmEvent';
+import GameTiles from './components/GameTiles';
+import Keyboard from './components/Keyboard';
+import allWords from './words.json';
+import dictionary from './dictionary.json';
+import Confetti from './components/Confetti';
+import './App.css';
 
 const TOTAL_GUESSES = 6;
 const DEFAULT_WIDTH_MULTIPLIER = 66;
@@ -57,7 +59,7 @@ function useWindowSize() {
     height: number | undefined;
   }>({
     width: undefined,
-    height: undefined,
+    height: undefined
   });
   useEffect(() => {
     // Handler to call on window resize
@@ -65,30 +67,30 @@ function useWindowSize() {
       // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight
       });
     }
     // Add event listener
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     // Call handler right away so state gets updated with initial window size
     handleResize();
     // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []); // Empty array ensures that effect is only run on mount
   return windowSize;
 }
 
 function loadState(): AppState {
-  const rawData = window.localStorage.getItem("data");
+  const rawData = window.localStorage.getItem('data');
   const defaultState: AppState = {
     wordLength: 3,
     guesses: [],
-    guess: "",
+    guess: '',
     guessLocked: false,
-    target: "",
-    keyboardStyle: "abc",
+    target: '',
+    keyboardStyle: 'abc',
     showTarget: false,
-    lastFiveWords: [],
+    lastFiveWords: []
   };
 
   if (!rawData) {
@@ -99,7 +101,7 @@ function loadState(): AppState {
 }
 
 function saveState(state: AppState) {
-  window.localStorage.setItem("data", JSON.stringify(state));
+  window.localStorage.setItem('data', JSON.stringify(state));
 }
 
 function GrowTransition(props: GrowProps) {
@@ -112,7 +114,7 @@ interface AppState {
   guess: string;
   guessLocked: boolean;
   target: string;
-  keyboardStyle: "qwerty" | "abc";
+  keyboardStyle: 'qwerty' | 'abc';
   showTarget: boolean;
   lastFiveWords: string[];
 }
@@ -131,7 +133,7 @@ function App() {
   const keyboardRef = React.useRef<HTMLDivElement>(null);
   const keyboardSize = useSize(keyboardRef);
 
-  const onBigScreen = useMediaQuery("(min-height:700px)");
+  const onBigScreen = useMediaQuery('(min-height:700px)');
 
   const [state, setState] = useState<AppState>(loadState());
 
@@ -139,33 +141,19 @@ function App() {
 
   const [badWordState, setBadWordState] = useState<BadWordState>({
     shake: false,
-    showNotInWordList: false,
+    showNotInWordList: false
   });
 
   const [isExploding, setIsExploding] = useState(false);
 
-  const {
-    wordLength,
-    guesses,
-    guess,
-    guessLocked,
-    target,
-    keyboardStyle,
-    showTarget,
-    lastFiveWords,
-  } = state;
+  const { wordLength, guesses, guess, guessLocked, target, keyboardStyle, showTarget, lastFiveWords } = state;
 
   const { shake, showNotInWordList } = badWordState;
 
-  const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(
-    null
-  );
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorElement(event.currentTarget);
-    },
-    []
-  );
+  const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElement(event.currentTarget);
+  }, []);
 
   const handleClose = useCallback(() => {
     setAnchorElement(null);
@@ -180,7 +168,7 @@ function App() {
       return guesses[guesses.length - 1];
     }
 
-    return "";
+    return '';
   }, [guesses]);
 
   const onLetterEntered = useCallback(
@@ -188,7 +176,7 @@ function App() {
       if (lastGuess !== target && guess.length < wordLength) {
         setState({
           ...state,
-          guess: `${guess}${letter}`,
+          guess: `${guess}${letter}`
         });
       }
     },
@@ -196,27 +184,22 @@ function App() {
   );
 
   const onGuess = useCallback(() => {
-    if (
-      lastGuess !== target &&
-      guess.length === wordLength &&
-      guessesLeft > 0 &&
-      !shake
-    ) {
+    if (lastGuess !== target && guess.length === wordLength && guessesLeft > 0 && !shake) {
       if (!dictionary.includes(guess.toLowerCase())) {
         setBadWordState({
           shake: true,
-          showNotInWordList: true,
+          showNotInWordList: true
         });
         setTimeout(() => {
           setBadWordState({
             shake: false,
-            showNotInWordList: true,
+            showNotInWordList: true
           });
         }, 300);
         setTimeout(() => {
           setBadWordState({
             shake: false,
-            showNotInWordList: false,
+            showNotInWordList: false
           });
         }, 2000);
         return;
@@ -224,7 +207,7 @@ function App() {
 
       setState({
         ...state,
-        guessLocked: true,
+        guessLocked: true
       });
     }
   }, [guess, guessesLeft, lastGuess, shake, state, target, wordLength]);
@@ -239,9 +222,9 @@ function App() {
       setState({
         ...state,
         guesses: [...guesses, guess],
-        guess: "",
+        guess: '',
         guessLocked: false,
-        showTarget: guesses.length + 1 === TOTAL_GUESSES && guess !== target,
+        showTarget: guesses.length + 1 === TOTAL_GUESSES && guess !== target
       });
     }
   }, [guess, guesses, guessesLeft, lastGuess, state, target, wordLength]);
@@ -262,7 +245,7 @@ function App() {
     if (lastGuess !== target && guess.length > 0) {
       setState({
         ...state,
-        guess: guess.slice(0, -1),
+        guess: guess.slice(0, -1)
       });
     }
   }, [guess, lastGuess, state, target]);
@@ -288,24 +271,22 @@ function App() {
         ...state,
         wordLength: length,
         guesses: [],
-        guess: "",
+        guess: '',
         target: newWord,
         lastFiveWords: newLastFiveWords,
-        showTarget: false,
+        showTarget: false
       });
     },
     [lastFiveWords, state]
   );
 
   useEffect(() => {
-    if (target === "") {
+    if (target === '') {
       onWordLengthHandler(wordLength);
     }
   }, [lastFiveWords, onWordLengthHandler, state, target, wordLength]);
 
-  const [newGameWordLength, setNewGameWordLength] = useState<
-    number | undefined
-  >(undefined);
+  const [newGameWordLength, setNewGameWordLength] = useState<number | undefined>(undefined);
 
   const handleNewGameConfirmClose = useCallback(
     (newGame: boolean) => {
@@ -322,11 +303,7 @@ function App() {
 
   const tryStartNewGame = useCallback(
     (length: number) => {
-      if (
-        guessesLeft > 0 &&
-        ((guesses.length > 0 && guesses[guesses.length - 1] !== target) ||
-          guess !== "")
-      ) {
+      if (guessesLeft > 0 && ((guesses.length > 0 && guesses[guesses.length - 1] !== target) || guess !== '')) {
         setAnchorElement(null);
         setNewGameWordLength(length);
         return;
@@ -338,33 +315,27 @@ function App() {
   );
 
   const onChangeKeyboardStyle = useCallback(
-    (newKeyboardStyle: "qwerty" | "abc") => {
+    (newKeyboardStyle: 'qwerty' | 'abc') => {
       setAnchorElement(null);
       setState({
         ...state,
-        keyboardStyle: newKeyboardStyle,
+        keyboardStyle: newKeyboardStyle
       });
     },
     [state]
   );
 
   const toggleKeyboardStyle = useCallback(
-    () => onChangeKeyboardStyle(keyboardStyle === "abc" ? "qwerty" : "abc"),
+    () => onChangeKeyboardStyle(keyboardStyle === 'abc' ? 'qwerty' : 'abc'),
     [keyboardStyle, onChangeKeyboardStyle]
   );
 
   const widthMultiplier = useMemo(() => {
-    if (
-      onBigScreen ||
-      !size?.height ||
-      !headerSize?.height ||
-      !keyboardSize?.height
-    ) {
+    if (onBigScreen || !size?.height || !headerSize?.height || !keyboardSize?.height) {
       return DEFAULT_WIDTH_MULTIPLIER;
     }
 
-    const playareaHeight =
-      size.height - headerSize.height - keyboardSize.height - MARGIN;
+    const playareaHeight = size.height - headerSize.height - keyboardSize.height - MARGIN;
 
     return (playareaHeight - (TOTAL_GUESSES - 1) * 5) / TOTAL_GUESSES;
   }, [headerSize?.height, keyboardSize?.height, onBigScreen, size.height]);
@@ -373,82 +344,79 @@ function App() {
     (event: KeyboardEvent) => {
       if (event.shiftKey) {
         switch (event.key.toLowerCase()) {
-          case "n":
+          case 'n':
             event.preventDefault();
             tryStartNewGame(wordLength);
             return;
-          case "q":
+          case 'q':
             event.preventDefault();
-            onChangeKeyboardStyle("qwerty");
+            onChangeKeyboardStyle('qwerty');
             return;
-          case "a":
+          case 'a':
             event.preventDefault();
-            onChangeKeyboardStyle("abc");
+            onChangeKeyboardStyle('abc');
+            return;
+          default:
             return;
         }
       }
 
       switch (event.key.toLowerCase()) {
-        case "3":
-        case "4":
-        case "5":
+        case '3':
+        case '4':
+        case '5':
           event.preventDefault();
           tryStartNewGame(+event.key);
           break;
-        case "a":
-        case "b":
-        case "c":
-        case "d":
-        case "e":
-        case "f":
-        case "g":
-        case "h":
-        case "i":
-        case "j":
-        case "k":
-        case "l":
-        case "m":
-        case "n":
-        case "o":
-        case "p":
-        case "q":
-        case "r":
-        case "s":
-        case "t":
-        case "u":
-        case "v":
-        case "w":
-        case "x":
-        case "y":
-        case "z":
+        case 'a':
+        case 'b':
+        case 'c':
+        case 'd':
+        case 'e':
+        case 'f':
+        case 'g':
+        case 'h':
+        case 'i':
+        case 'j':
+        case 'k':
+        case 'l':
+        case 'm':
+        case 'n':
+        case 'o':
+        case 'p':
+        case 'q':
+        case 'r':
+        case 's':
+        case 't':
+        case 'u':
+        case 'v':
+        case 'w':
+        case 'x':
+        case 'y':
+        case 'z':
           event.preventDefault();
           onLetterEntered(event.key.toUpperCase());
           break;
-        case "enter":
+        case 'enter':
           event.preventDefault();
           onGuess();
           break;
-        case "backspace":
+        case 'backspace':
           event.preventDefault();
           onLetterDeleted();
           break;
+        default:
+          break;
       }
     },
-    [
-      onChangeKeyboardStyle,
-      onGuess,
-      onLetterDeleted,
-      onLetterEntered,
-      tryStartNewGame,
-      wordLength,
-    ]
+    [onChangeKeyboardStyle, onGuess, onLetterDeleted, onLetterEntered, tryStartNewGame, wordLength]
   );
 
   useEffect(() => {
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener('keydown', onKeyDown);
     };
   }, [onKeyDown]);
 
@@ -456,8 +424,8 @@ function App() {
     () =>
       createTheme({
         palette: {
-          mode: "dark",
-        },
+          mode: 'dark'
+        }
       }),
     []
   );
@@ -474,22 +442,15 @@ function App() {
     window.dispatchEvent(new PWAUpdateConfirmEvent());
   }, []);
 
-  useWindowEvent("pwaupdateavailable", onUpdate);
+  useWindowEvent('pwaupdateavailable', onUpdate);
   useCheckForUpdates();
 
   const updateAlert = useMemo(
     () => (
-      <Alert
-        severity="info"
-        classes={{ root: "alert-root", message: "alert-message" }}
-      >
-        <Box>{updating ? "Updating..." : "A new version is available"}</Box>
+      <Alert severity="info" classes={{ root: 'update-alert-root', message: 'update-alert-message' }}>
+        <Box>{updating ? 'Updating...' : 'A new version is available'}</Box>
         {!updating ? (
-          <Button
-            color="secondary"
-            size="small"
-            onClick={onUpdateMessageAccept}
-          >
+          <Button color="secondary" size="small" onClick={onUpdateMessageAccept}>
             Update
           </Button>
         ) : null}
@@ -501,81 +462,66 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <header
-          className={`App-header${onBigScreen ? "" : " App-header-mobile"}`}
-        >
+        <header className={`App-header${onBigScreen ? '' : ' App-header-mobile'}`}>
           <Typography
             ref={headerRef}
-            variant={onBigScreen ? "h4" : "h5"}
+            variant={onBigScreen ? 'h4' : 'h5'}
             component="div"
             sx={{
-              display: "flex",
-              borderBottom: "1px solid #3a3a3c",
-              height: "51px",
-              lineHeight: "51px",
-              mb: "10px",
+              display: 'flex',
+              borderBottom: '1px solid #3a3a3c',
+              height: '51px',
+              lineHeight: '51px',
+              mb: '10px',
               fontWeight: 600,
-              width: "100%",
-              boxSizing: "border-box",
-              alignItems: "center",
+              width: '100%',
+              boxSizing: 'border-box',
+              alignItems: 'center'
             }}
           >
-            <Box sx={{ flexGrow: 1 }}></Box>
+            <Box sx={{ flexGrow: 1 }} />
             Wordle for Kids
-            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "flex-end" }}>
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'flex-end' }}>
               <IconButton
                 onClick={handleClick}
                 sx={
                   onBigScreen
                     ? undefined
                     : {
-                        position: "absolute",
-                        top: "4px",
-                        right: "4px",
+                        position: 'absolute',
+                        top: '4px',
+                        right: '4px'
                       }
                 }
                 aria-label="settings"
               >
-                <SettingsOutlinedIcon sx={{ color: "white" }} />
+                <SettingsOutlinedIcon sx={{ color: 'white' }} />
               </IconButton>
               <Popover
                 open={popoverOpen}
                 anchorEl={anchorElement}
                 onClose={handleClose}
                 anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
+                  vertical: 'bottom',
+                  horizontal: 'right'
                 }}
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
               >
                 <Typography component="div" sx={{ p: 1 }}>
-                  <Box
-                    sx={{ p: 1, cursor: "pointer" }}
-                    onClick={() => tryStartNewGame(3)}
-                  >
+                  <Box sx={{ p: 1, cursor: 'pointer' }} onClick={() => tryStartNewGame(3)}>
                     3 Letter Words
                   </Box>
-                  <Box
-                    sx={{ p: 1, cursor: "pointer" }}
-                    onClick={() => tryStartNewGame(4)}
-                  >
+                  <Box sx={{ p: 1, cursor: 'pointer' }} onClick={() => tryStartNewGame(4)}>
                     4 Letter Words
                   </Box>
-                  <Box
-                    sx={{ p: 1, cursor: "pointer" }}
-                    onClick={() => tryStartNewGame(5)}
-                  >
+                  <Box sx={{ p: 1, cursor: 'pointer' }} onClick={() => tryStartNewGame(5)}>
                     5 Letter Words
                   </Box>
-                  <Box
-                    sx={{ p: 1, cursor: "pointer" }}
-                    onClick={toggleKeyboardStyle}
-                  >
-                    Change to {keyboardStyle === "abc" ? "QWERTY" : "ABC"}{" "}
-                    keyboard
+                  <Box sx={{ p: 1, cursor: 'pointer' }} onClick={toggleKeyboardStyle}>
+                    Change to {keyboardStyle === 'abc' ? 'QWERTY' : 'ABC'} keyboard
                   </Box>
                 </Typography>
               </Popover>
@@ -584,17 +530,17 @@ function App() {
           <Box sx={{ flexGrow: 1 }} />
           <Box
             sx={{
-              display: "grid",
-              gridTemplateRows: "repeat(6, 1fr)",
-              gridGap: "6px",
-              width: `${wordLength * widthMultiplier + (wordLength - 1) * 5}px`,
+              display: 'grid',
+              gridTemplateRows: 'repeat(6, 1fr)',
+              gridGap: '6px',
+              width: `${wordLength * widthMultiplier + (wordLength - 1) * 5}px`
             }}
           >
-            {guesses.map((guess, index) => (
+            {guesses.map((pastGuess, index) => (
               <GameTiles
                 target={target}
                 key={`previous-guess-${index}`}
-                word={guess}
+                word={pastGuess}
                 wordLength={wordLength}
                 locked
               />
@@ -612,12 +558,7 @@ function App() {
             ) : null}
             {guessesLeft > 1
               ? [...Array(guessesLeft - 1)].map((_, index) => (
-                  <GameTiles
-                    target={target}
-                    key={`next-guess-${index}`}
-                    word=""
-                    wordLength={wordLength}
-                  />
+                  <GameTiles target={target} key={`next-guess-${index}`} word="" wordLength={wordLength} />
                 ))
               : null}
           </Box>
@@ -634,52 +575,52 @@ function App() {
         </header>
         <Snackbar
           classes={{
-            root: "snackbarRoot",
+            root: 'snackbarRoot'
           }}
           open={showTarget}
           TransitionComponent={GrowTransition}
         >
           <Alert
             classes={{
-              message: "alertMessage",
+              message: 'alertMessage'
             }}
             sx={{
-              position: "fixed",
-              width: "80%",
-              maxWidth: "484px",
-              height: "48px",
-              top: "calc(50% - 48px)",
-              left: (size?.width ?? 0) < 484 ? "10%" : "calc(50% - 242px)",
-              boxSizing: "border-box",
+              position: 'fixed',
+              width: '80%',
+              maxWidth: '484px',
+              height: '48px',
+              top: 'calc(50% - 48px)',
+              left: (size?.width ?? 0) < 484 ? '10%' : 'calc(50% - 242px)',
+              boxSizing: 'border-box',
               fontSize: 16,
-              fontWeight: "bold",
+              fontWeight: 'bold'
             }}
             severity="error"
           >
-            {showTarget ? target : ""}
+            {showTarget ? target : ''}
           </Alert>
         </Snackbar>
         <Snackbar
           classes={{
-            root: "snackbarRoot",
+            root: 'snackbarRoot'
           }}
           open={showNotInWordList}
           TransitionComponent={GrowTransition}
         >
           <Alert
             classes={{
-              message: "alertMessage",
+              message: 'alertMessage'
             }}
             sx={{
-              position: "fixed",
-              width: "80%",
-              maxWidth: "484px",
-              height: "48px",
-              top: "calc(50% - 48px)",
-              left: (size?.width ?? 0) < 484 ? "10%" : "calc(50% - 242px)",
-              boxSizing: "border-box",
+              position: 'fixed',
+              width: '80%',
+              maxWidth: '484px',
+              height: '48px',
+              top: 'calc(50% - 48px)',
+              left: (size?.width ?? 0) < 484 ? '10%' : 'calc(50% - 242px)',
+              boxSizing: 'border-box',
               fontSize: 16,
-              fontWeight: "bold",
+              fontWeight: 'bold'
             }}
             severity="warning"
           >
@@ -703,11 +644,7 @@ function App() {
             <Button onClick={() => handleNewGameConfirmClose(true)}>Yes</Button>
           </DialogActions>
         </Dialog>
-        <Confetti
-          enabled={isExploding}
-          width={size.width}
-          height={size.height}
-        />
+        <Confetti enabled={isExploding} width={size.width} height={size.height} />
       </div>
       <Snackbar open={hasNewVersion}>{updateAlert}</Snackbar>
     </ThemeProvider>

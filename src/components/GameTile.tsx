@@ -46,7 +46,7 @@ function GameTile({ letter, index, target, locked, onFlipEnd }: GameTileProps) {
           justifyContent: 'center',
           alignItems: 'center',
           fontWeight: 700,
-          fontSize: 32,
+          fontSize: 32
         }}
       >
         {letter}
@@ -68,7 +68,7 @@ function GameTile({ letter, index, target, locked, onFlipEnd }: GameTileProps) {
           justifyContent: 'center',
           alignItems: 'center',
           fontWeight: 700,
-          fontSize: 32,
+          fontSize: 32
         }}
       >
         {letter}
