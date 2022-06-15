@@ -461,7 +461,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <Box className="App">
         <header className={`App-header${onBigScreen ? '' : ' App-header-mobile'}`}>
           <Typography
             ref={headerRef}
@@ -645,8 +645,8 @@ function App() {
           </DialogActions>
         </Dialog>
         <Confetti enabled={isExploding} width={size.width} height={size.height} />
-      </div>
-      <Snackbar open={hasNewVersion}>{updateAlert}</Snackbar>
+        <Snackbar open={hasNewVersion}>{updateAlert}</Snackbar>
+      </Box>
     </ThemeProvider>
   );
 }

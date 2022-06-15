@@ -1,5 +1,3 @@
-import range from 'lodash/range';
-
 import useStyles, { IParticle, IStyleClasses } from './styles';
 
 const FORCE = 0.5; // 0-1 roughly the vertical force at which particles initially explode
@@ -22,7 +20,7 @@ interface IConfetti {
 
 const createParticles = (count: number, colors: string[]): IParticle[] => {
   const increment = 360 / count;
-  return range(count).map((index) => ({
+  return [...Array(count).keys()].map((index) => ({
     color: colors[index % colors.length],
     degree: increment * index
   }));

@@ -1,5 +1,4 @@
 import { makeStyles } from '@mui/material/styles';
-import round from 'lodash/round';
 
 import { coinFlip, mapRange, rotate, rotationTransforms, shouldBeCircle } from './utils';
 
@@ -60,6 +59,11 @@ const confettiKeyframes = (degrees: number[], floorHeight: number, floorWidth: n
     },
     ...xLandingPoints
   };
+};
+
+const round = (num: number, precision: number) => {
+  const factor = 10 ** precision;
+  return Math.round(num * factor) / factor;
 };
 
 const confettoStyle = (particle: IParticle, duration: number, force: number, size: number, i: number) => {
