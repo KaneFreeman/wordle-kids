@@ -50,6 +50,18 @@
   justify-content: center;
 }
 
+.update-alert-root {
+  display: flex;
+  align-items: center;
+}
+
+.update-alert-root .update-alert-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+}
+
 .App .snackbarRoot {
   z-index: unset;
 }
