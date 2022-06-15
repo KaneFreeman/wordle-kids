@@ -1,28 +1,29 @@
-import { Box } from '@mui/material';
-import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
-import KeyboardButton from './KeyboardButton';
-import { useMemo } from 'react';
+import { Box } from "@mui/material";
+import BackspaceOutlinedIcon from "@mui/icons-material/BackspaceOutlined";
+import KeyboardReturnOutlinedIcon from "@mui/icons-material/KeyboardReturnOutlined";
+import KeyboardButton from "./KeyboardButton";
+import { useMemo } from "react";
 
 interface KeyboardProps {
   keyboardRef: React.RefObject<HTMLDivElement>;
   guesses: string[];
   target: string;
-  keyboardStyle: 'qwerty' | 'abc';
+  keyboardStyle: "qwerty" | "abc";
   onGuess: () => void;
   onLetterEntered: (letter: string) => void;
   onLetterDeleted: () => void;
 }
 
 const abcKeyboard = [
-  ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-  ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'],
-  ['T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+  ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+  ["K", "L", "M", "N", "O", "P", "Q", "R", "S"],
+  ["T", "U", "V", "W", "X", "Y", "Z"],
 ];
 
 const qwertyKeyboard = [
-  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-  ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
+  ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+  ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+  ["Z", "X", "C", "V", "B", "N", "M"],
 ];
 
 function Keyboard({
@@ -35,7 +36,7 @@ function Keyboard({
   onLetterDeleted,
 }: KeyboardProps) {
   const keyboardRows = useMemo(() => {
-    const keyboard = keyboardStyle === 'abc' ? abcKeyboard : qwertyKeyboard;
+    const keyboard = keyboardStyle === "abc" ? abcKeyboard : qwertyKeyboard;
 
     return keyboard.map((keyboardRow) =>
       keyboardRow.map((key) => (
@@ -55,29 +56,29 @@ function Keyboard({
       ref={keyboardRef}
       key="abc-keyboard"
       sx={{
-        display: 'grid',
+        display: "grid",
         gridTemplateRows: `repeat(3, 1fr)`,
-        mt: '10px',
+        mt: "10px",
         ml: 1,
         mr: 1,
-        width: 'calc(100% - 16px)',
-        maxWidth: '484px',
+        width: "calc(100% - 16px)",
+        maxWidth: "484px",
       }}
     >
       <Box
         sx={{
-          display: 'flex',
-          width: '100%',
-          margin: '0 auto 8px',
+          display: "flex",
+          width: "100%",
+          margin: "0 auto 8px",
         }}
       >
         {keyboardRows[0]}
       </Box>
       <Box
         sx={{
-          display: 'flex',
-          width: '100%',
-          margin: '0 auto 8px',
+          display: "flex",
+          width: "100%",
+          margin: "0 auto 8px",
         }}
       >
         <Box sx={{ flexGrow: 1, flex: 0.5 }} />
@@ -86,13 +87,13 @@ function Keyboard({
       </Box>
       <Box
         sx={{
-          display: 'flex',
-          width: '100%',
-          margin: '0 auto 8px',
+          display: "flex",
+          width: "100%",
+          margin: "0 auto 8px",
         }}
       >
         <KeyboardButton
-          label="Enter"
+          label={<KeyboardReturnOutlinedIcon />}
           guesses={guesses}
           target={target}
           onClick={onGuess}

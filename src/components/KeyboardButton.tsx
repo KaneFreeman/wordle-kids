@@ -23,9 +23,9 @@ function KeyboardButton({
     [onClick, letter]
   );
 
-  const backgroundColor = useMemo(() => {
+  const [color, background] = useMemo(() => {
     if (!letter) {
-      return '#818384';
+      return ['#ffffff', '#4e4e4e'];
     }
 
     let foundAt: number[] = [];
@@ -41,11 +41,11 @@ function KeyboardButton({
     );
 
     if (foundAt.length === 0) {
-      return '#818384';
+      return ['#ffffff', '#4e4e4e'];
     }
 
     if (foundAt.length > 0 && !target.includes(letter)) {
-      return '#3a3a3c';
+      return ['#686868', '#1f1f1f'];
     }
 
     let inRightSpot = false;
@@ -57,10 +57,10 @@ function KeyboardButton({
     }
 
     if (inRightSpot) {
-      return '#538d4e';
+      return ['#ffffff', '#408535'];
     }
 
-    return '#b59f3b';
+    return ['#ffffff', '#88750f'];
   }, [guesses, letter, target]);
 
   return (
@@ -70,7 +70,8 @@ function KeyboardButton({
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer',
-        background: backgroundColor,
+        background,
+        color,
         border: 0,
         padding: 0,
         margin: '0 6px 0 0',

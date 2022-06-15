@@ -26,11 +26,11 @@ function GameTile({ letter, index, target, locked, onFlipEnd }: GameTileProps) {
   }, [index, isFlipped, locked, onFlipEnd]);
 
   const lockedSide = useMemo(() => {
-    let color = '#3a3a3c';
+    let color = '#313131';
     if (target.charAt(index) === letter) {
-      color = '#538d4e';
+      color = '#408535';
     } else if (target.includes(letter)) {
-      color = '#b59f3b';
+      color = '#88750f';
     }
 
     return (

@@ -534,6 +534,7 @@ function App() {
                         right: "4px",
                       }
                 }
+                aria-label="settings"
               >
                 <SettingsOutlinedIcon sx={{ color: "white" }} />
               </IconButton>
