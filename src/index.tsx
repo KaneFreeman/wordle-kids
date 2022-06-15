@@ -39,3 +39,9 @@ serviceWorkerRegistration.register({
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// eslint-disable-next-line no-restricted-globals
+screen.orientation.lock('portrait').catch(() => {
+  // eslint-disable-next-line no-console
+  console.info('Your brower does not support locking screen orientation');
+});
