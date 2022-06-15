@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import ConfettiExplosion from '@reonomy/react-confetti-explosion';
+import ConfettiExplosion from './confetti-explosion';
 
 interface GameTileProps {
   enabled: boolean;

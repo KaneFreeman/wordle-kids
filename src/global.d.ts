@@ -1,1 +1,4 @@
-declare module 'reshake';
+interface Window {
+  serviceWorkerRegistration?: ServiceWorkerRegistration;
+  serviceWorkerWaiting?: ServiceWorker | null;
+}
