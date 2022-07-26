@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
 import { coinFlip, mapRange, rotate, rotationTransforms, shouldBeCircle } from './utils';
 
